@@ -1,0 +1,31 @@
+{
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cezaraugusto/extension-manifest-assets.git"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "name": "extension-manifest-assets",
+  "version": "0.0.0",
+  "description": "Output file paths from fields declared in a browsser extension manifest",
+  "main": "module.js",
+  "author": {
+    "name": "Cezar Augusto",
+    "email": "boss@cezaraugusto.net",
+    "url": "https://cezaraugusto.net"
+  },
+  "files": [
+    "module.js",
+    "generate"
+  ],
+  "keywords": [
+    "browser",
+    "extension",
+    "webextension",
+    "manifest",
+    "generate",
+    "assets"
+  ]
+}
