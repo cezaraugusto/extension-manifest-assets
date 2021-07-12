@@ -7,13 +7,13 @@ const optionsPageHTMLEntry = require('./options')
 const popupPageHTMLEntry = require('./popup')
 
 module.exports = function (extensionPath) {
-  return [
-    backgroundPageHTMLEntry(extensionPath),
-    bookmarksOverridePageHTMLEntry(extensionPath),
-    devtoolsPageHTMLEntry(extensionPath),
-    historyOverridePageHTMLEntry(extensionPath),
-    newtabOverridePageHTMLEntry(extensionPath),
-    optionsPageHTMLEntry(extensionPath),
-    popupPageHTMLEntry(extensionPath)
-  ]
+  return {
+    backgroundPage: backgroundPageHTMLEntry(extensionPath),
+    bookmkarks: bookmarksOverridePageHTMLEntry(extensionPath),
+    devtools: devtoolsPageHTMLEntry(extensionPath),
+    history: historyOverridePageHTMLEntry(extensionPath),
+    newtab: newtabOverridePageHTMLEntry(extensionPath),
+    options: optionsPageHTMLEntry(extensionPath),
+    popup: popupPageHTMLEntry(extensionPath)
+  }
 }

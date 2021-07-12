@@ -7,13 +7,13 @@ const optionsScriptEntry = require('./options')
 const popupScriptEntry = require('./popup')
 
 module.exports = async function (manifestPath) {
-  return [
-    ...await backgroundPageScriptEntry(manifestPath),
-    ...await bookmarksOverrideScriptEntry(manifestPath),
-    ...await devtoolsScriptEntry(manifestPath),
-    ...await historyOverrideScriptEntry(manifestPath),
-    ...await newtabOverrideScriptEntry(manifestPath),
-    ...await optionsScriptEntry(manifestPath),
-    ...await popupScriptEntry(manifestPath)
-  ]
+  return {
+    backgroundPage: await backgroundPageScriptEntry(manifestPath),
+    bookmarks: await bookmarksOverrideScriptEntry(manifestPath),
+    devtools: await devtoolsScriptEntry(manifestPath),
+    history: await historyOverrideScriptEntry(manifestPath),
+    newtab: await newtabOverrideScriptEntry(manifestPath),
+    options: await optionsScriptEntry(manifestPath),
+    popup: await popupScriptEntry(manifestPath)
+  }
 }
