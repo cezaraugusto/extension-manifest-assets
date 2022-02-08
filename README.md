@@ -50,35 +50,104 @@ const manifestSample = {
   }
 }
 
-const {all} = extensionManifestAssets(/*<path-to-your-manifest-file>*/)
+console.log(manifestAssets)
+```
 
-// Returns:
-// {
-//   js: [
-//     '<absolute-path-to-your-extension>/content/content.js',
-//     '<absolute-path-to-your-extension>/background/background.js',
-//     '<absolute-path-to-your-extension>/devtools/devtools.js',
-//     '<absolute-path-to-your-extension>/overrides/newtab/newtab.js',
-//     '<absolute-path-to-your-extension>/options/options.js',
-//     '<absolute-path-to-your-extension>/popup/popup.js'
-//   ],
-//   html: [
-//     '<absolute-path-to-your-extension>/background/background.html',
-//     '<absolute-path-to-your-extension>/devtools/devtools.html',
-//     '<absolute-path-to-your-extension>/overrides/newtab/newtab.html',
-//     '<absolute-path-to-your-extension>/options/options.html',
-//     '<absolute-path-to-your-extension>/popup/popup.html'
-//   ],
-//   css: [
-//     '<absolute-path-to-your-extension>/content/content.css',
-//     '<absolute-path-to-your-extension>/content/content2.css',
-//     '<absolute-path-to-your-extension>/devtools/devtools.css',
-//     '<absolute-path-to-your-extension>/overrides/newtab/newtab.css',
-//     '<absolute-path-to-your-extension>/options/options.css',
-//     '<absolute-path-to-your-extension>/popup/popup.css'
-//   ]
-// }
+Returns:
 
+```js
+  {
+    js: [
+      '<absolute-path-to-your-extension>/content/content.js',
+      '<absolute-path-to-your-extension>/background/background.js',
+      '<absolute-path-to-your-extension>/devtools/devtools.js',
+      '<absolute-path-to-your-extension>/overrides/newtab/newtab.js',
+      '<absolute-path-to-your-extension>/options/options.js',
+      '<absolute-path-to-your-extension>/popup/popup.js'
+    ],
+    html: [
+      '<absolute-path-to-your-extension>/background/background.html',
+      '<absolute-path-to-your-extension>/devtools/devtools.html',
+      '<absolute-path-to-your-extension>/overrides/newtab/newtab.html',
+      '<absolute-path-to-your-extension>/options/options.html',
+      '<absolute-path-to-your-extension>/popup/popup.html'
+    ],
+    css: [
+      '<absolute-path-to-your-extension>/content/content.css',
+      '<absolute-path-to-your-extension>/content/content2.css',
+      '<absolute-path-to-your-extension>/devtools/devtools.css',
+      '<absolute-path-to-your-extension>/overrides/newtab/newtab.css',
+      '<absolute-path-to-your-extension>/options/options.css',
+      '<absolute-path-to-your-extension>/popup/popup.css'
+    ],
+    all: [
+      '<absolute-path-to-your-extension>/content/content.js',
+      '<absolute-path-to-your-extension>/background/background.js',
+      '<absolute-path-to-your-extension>/devtools/devtools.js',
+      '<absolute-path-to-your-extension>/overrides/newtab/newtab.js',
+      '<absolute-path-to-your-extension>/options/options.js',
+      '<absolute-path-to-your-extension>/popup/popup.js',
+      '<absolute-path-to-your-extension>/background/background.html',
+      '<absolute-path-to-your-extension>/devtools/devtools.html',
+      '<absolute-path-to-your-extension>/overrides/newtab/newtab.html',
+      '<absolute-path-to-your-extension>/options/options.html',
+      '<absolute-path-to-your-extension>/popup/popup.html',
+      '<absolute-path-to-your-extension>/content/content.css',
+      '<absolute-path-to-your-extension>/content/content2.css',
+      '<absolute-path-to-your-extension>/devtools/devtools.css',
+      '<absolute-path-to-your-extension>/overrides/newtab/newtab.css',
+      '<absolute-path-to-your-extension>/options/options.css',
+      '<absolute-path-to-your-extension>/popup/popup.css'
+    ],
+    features: {
+      background: {
+      scripts: [],
+      page: {
+        html: '<absolute-path-to-your-extension>/background/background.html',
+        js: ['<absolute-path-to-your-extension>/background/background.js']
+      }
+    },
+    content: {
+      css: [
+        '<absolute-path-to-your-extension>/content/content.css',
+        '<absolute-path-to-your-extension>/content/content2.css',
+      ],
+      scripts: [
+        '<absolute-path-to-your-extension>/content/content.js'
+        '<absolute-path-to-your-extension>/content/content2.js'
+      ]
+    },
+    bookmarks: {
+      html: '',
+      css: [],
+      js: []
+    },
+    devtools: {
+      html: '<absolute-path-to-your-extension>/devtools/devtools.html',
+      css: ['<absolute-path-to-your-extension>/devtools/devtools.css'],
+      js: ['<absolute-path-to-your-extension>/devtools/devtools.js']
+    },
+    history: {
+      html: '',
+      css: [],
+      js: []
+    },
+    newtab: {
+      html: '<absolute-path-to-your-extension>/newtab/newtab.html',
+      css: ['<absolute-path-to-your-extension>/newtab/newtab.css'],
+      js: ['<absolute-path-to-your-extension>/newtab/newtab.js']
+    },
+    options: {
+      html: '<absolute-path-to-your-extension>/options/options.html',
+      css: ['<absolute-path-to-your-extension>/options/options.css'],
+      js: ['<absolute-path-to-your-extension>/options/options.js']
+    },
+    popup: {
+      html: '',
+      css: [],
+      js: []
+    }
+  }
 ```
 ## API
 
@@ -88,29 +157,37 @@ const {all} = extensionManifestAssets(/*<path-to-your-manifest-file>*/)
 
 Type: `string`
 
-#### const {all} = extensionManifestAssets(manifestFilePath)
-
-Type: `object`
-
-Returns all entries.
+## Returns
 
 #### const {js} = extensionManifestAssets(manifestFilePath)
 
-Type: `object`
+Type: `array`
 
 Returns only JavaScript entries.
 
+#### const {html} = extensionManifestAssets(manifestFilePath)
+
+Type: `array`
+
+Returns only HTML entries.
+
 #### const {css} = extensionManifestAssets(manifestFilePath)
 
-Type: `object`
+Type: `array`
 
 Returns only CSS entries.
 
-#### const {html} = extensionManifestAssets(manifestFilePath)
+#### const {all} = extensionManifestAssets(manifestFilePath)
+
+Type: `array`
+
+Returns all entries.
+
+#### const {features} = extensionManifestAssets(manifestFilePath)
 
 Type: `object`
 
-Returns only HTML entries.
+Returns all entries split by feature.
 
 ## License
 

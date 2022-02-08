@@ -9,7 +9,7 @@ const popupPageHTMLEntry = require('./popup')
 module.exports = function (extensionPath) {
   return {
     backgroundPage: backgroundPageHTMLEntry(extensionPath),
-    bookmkarks: bookmarksOverridePageHTMLEntry(extensionPath),
+    bookmarks: bookmarksOverridePageHTMLEntry(extensionPath),
     devtools: devtoolsPageHTMLEntry(extensionPath),
     history: historyOverridePageHTMLEntry(extensionPath),
     newtab: newtabOverridePageHTMLEntry(extensionPath),
