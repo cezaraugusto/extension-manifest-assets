@@ -16,6 +16,9 @@
     "email": "boss@cezaraugusto.net",
     "url": "https://cezaraugusto.net"
   },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "files": [
     "module.js",
     "generate"
