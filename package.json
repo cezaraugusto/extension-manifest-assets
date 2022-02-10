@@ -8,7 +8,7 @@
     "node": ">=10"
   },
   "name": "extension-manifest-assets",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Output file paths from fields declared in a browsser extension manifest",
   "main": "module.js",
   "author": {
