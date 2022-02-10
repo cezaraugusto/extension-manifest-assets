@@ -3,9 +3,9 @@
 
 # extension-manifest-assets [![npm][npm-image]][npm-url]
 
-> Output file paths from fields declared in a browsser extension manifest
+> Output file paths from fields declared in a browser extension manifest file.
 
-Get all your HTML, JS and CSS assets from your manifest file, including scripts and CSS declared in HTML files.
+Get all your HTML, JS and CSS assets from your manifest, including scripts and CSS declared in HTML files.
 
 ## Installation
 
