@@ -17,6 +17,7 @@
     "url": "https://cezaraugusto.net"
   },
   "scripts": {
+    "start": "node ./module.js",
     "test": "echo \"No test specified\""
   },
   "files": [

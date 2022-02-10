@@ -35,45 +35,70 @@ const popupScriptEntry = require('./generate/scriptFromHtml/popup')
 const bgScriptEntry = require('./generate/scriptFromManifest/background')
 const contentScriptEntry = require('./generate/scriptFromManifest/content')
 
-async function getJavaScriptObjects (manifestPath) {
-  return Object.assign({},
-    // Get JavaScript entries from manifest file.
-    // Includes background and content scripts.
-    scriptFromManifest(manifestPath),
+async function getAllJavaScriptValues (manifestPath) {
+  const htmlScript = await scriptFromHtml(manifestPath)
+  const manifestScript = scriptFromManifest(manifestPath)
+
+  const htmlScriptValues = Object.values(htmlScript).flat()
+  const manifestScriptValues = Object.values(manifestScript).flat()
+
+  const scriptValues = [
     // Get relevant HTML entries from manifest file.
     // Includes all manifest fields that accept HTML values.
-    await scriptFromHtml(manifestPath)
-  )
+    ...htmlScriptValues,
+    // Get JavaScript entries from manifest file.
+    // Includes background and content scripts.
+    ...manifestScriptValues
+  ]
+
+  return [...new Set(scriptValues)]
 }
 
-async function getAllObjects (manifestPath) {
-  const css = await cssFromHtml(manifestPath)
-  const js = await getJavaScriptObjects(manifestPath)
+function getAllHtmlValues (manifestPath) {
   const html = htmlFromManifest(manifestPath)
+  const htmlValues = Object.values(html).flat()
 
-  const allObjects = {...css, ...js, ...html}
-  return allObjects
+  return [...new Set(htmlValues)]
+}
+
+async function getAllCssValues (manifestPath) {
+  const css = await cssFromHtml(manifestPath)
+  const cssValues = Object.values(css).flat()
+
+  return [...new Set(cssValues)]
+}
+
+async function getAllValues (manifestPath) {
+  const cssValues = await getAllCssValues(manifestPath)
+  const jsValues = await getAllJavaScriptValues(manifestPath)
+  const htmlValues = getAllHtmlValues(manifestPath)
+  const allValues = [...cssValues, ...jsValues, ...htmlValues]
+
+  // Remove empty strings
+  const values = allValues.filter(v => v != '')
+  return values
 }
 
 async function extensionManifestAssets (manifestPath) {
-  const allObjects = await getAllObjects(manifestPath)
-  const allValues = Object.values(allObjects)
-  const all = [].concat(...allValues)
+  const jsValues = await getAllJavaScriptValues(manifestPath)
+  const htmlValues = getAllHtmlValues(manifestPath)
+  const cssValues = await getAllCssValues(manifestPath)
+  const allValues = await getAllValues(manifestPath)
 
   return {
     // Get all JavaScript entries from both HTML files
     // and manifest combined.
-    js: await getJavaScriptObjects(manifestPath),
+    js: jsValues,
     // Get relevant script entries by scrapping HTML pages
     // defined in the manifest file. Includes all scripts
     // defined in every HTML page declared in the manifest file.
-    html: htmlFromManifest(manifestPath),
+    html: htmlValues,
     // Get relevant CSS entries by scrapping HTML pages
     // defined in the manifest file. Includes all CSS
     // defined in every HTML page declared in the manifest file.
-    css: await cssFromHtml(manifestPath),
-    // Combine all but empty entries
-    all: all.filter(data => data !== ''),
+    css: cssValues,
+    // Combine all entries
+    all: allValues,
     // Split by feature.
     features: {
       background: {
@@ -121,4 +146,6 @@ async function extensionManifestAssets (manifestPath) {
   }
 }
 
+// const path = require('path')
+// extensionManifestAssets(path.resolve(__dirname, './fixtures/manifest.json'))
 module.exports = extensionManifestAssets
