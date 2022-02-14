@@ -80,25 +80,48 @@ async function getAllValues (manifestPath) {
 }
 
 async function extensionManifestAssets (manifestPath) {
-  const jsValues = await getAllJavaScriptValues(manifestPath)
-  const htmlValues = getAllHtmlValues(manifestPath)
-  const cssValues = await getAllCssValues(manifestPath)
   const allValues = await getAllValues(manifestPath)
 
   return {
     // Get all JavaScript entries from both HTML files
     // and manifest combined.
-    js: jsValues,
+    js: {
+      background: [
+        ...bgScriptEntry(manifestPath),
+        ...await bgPageScriptEntry(manifestPath)
+      ].filter(v => v != ''),
+      content: contentScriptEntry(manifestPath),
+      bookmarks: await bookmarksScriptEntry(manifestPath),
+      devtools: await devtoolsScriptEntry(manifestPath),
+      history: await historyScriptEntry(manifestPath),
+      newtab: await newtabScriptEntry(manifestPath),
+      options: await optionsScriptEntry(manifestPath),
+      popup: await popupScriptEntry(manifestPath),
+    },
     // Get relevant script entries by scrapping HTML pages
     // defined in the manifest file. Includes all scripts
     // defined in every HTML page declared in the manifest file.
-    html: htmlValues,
+    html: {
+      background: backgroundEntry(manifestPath),
+      bookmarks: bookmarksEntry(manifestPath),
+      devtools: devtoolsEntry(manifestPath),
+      history: historyEntry(manifestPath),
+      newtab: newtabEntry(manifestPath),
+      options: optionsEntry(manifestPath),
+      popup: popupEntry(manifestPath)
+    },
     // Get relevant CSS entries by scrapping HTML pages
     // defined in the manifest file. Includes all CSS
     // defined in every HTML page declared in the manifest file.
-    css: cssValues,
-    // Combine all entries
-    all: allValues,
+    css: {
+      content: contentCssEntry(manifestPath),
+      bookmarks: await bookmarksCssEntry(manifestPath),
+      devtools: await devtoolsCssEntry(manifestPath),
+      history: await historyCssEntry(manifestPath),
+      newtab: await newtabCssEntry(manifestPath),
+      options: await optionsCssEntry(manifestPath),
+      popup: await popupCssEntry(manifestPath)
+    },
     // Split by feature.
     features: {
       background: {
@@ -142,7 +165,9 @@ async function extensionManifestAssets (manifestPath) {
         css: await popupCssEntry(manifestPath),
         js: await popupScriptEntry(manifestPath)
       }
-    }
+    },
+    // Combine all entries
+    all: allValues
   }
 }
 
